@@ -6,17 +6,32 @@
 //
 
 import Foundation
+import Combine
+
+//final class UserRepositoryImpl: UserRepository {
+//
+//    private let apiClient: APIClient
+//
+//    init(apiClient: APIClient) {
+//        self.apiClient = apiClient
+//    }
+//
+//    func getUser() async throws -> UserDetails {
+//        try await apiClient.fetchUser()
+//    }
+//}
+
 
 final class UserRepositoryImpl: UserRepository {
 
-    private let apiClient: APIClient
+    private let apiClient: LoginAPIClient
 
-    init(apiClient: APIClient) {
+    init(apiClient: LoginAPIClient) {
         self.apiClient = apiClient
     }
 
-    func getUser() async throws -> User {
-        try await apiClient.fetchUser()
+    func login(  email: String,  password: String) -> AnyPublisher<UserDetails, NSError> {
+        return apiClient.login( email: email, password: password)
+       
     }
 }
-

@@ -9,13 +9,13 @@ import SwiftUI
 struct AppView: View {
 
     @StateObject private var coordinator = AppCoordinator()
-
+    let loginUseCase = LoginUseCaseImpl(repository: UserRepositoryImpl(apiClient: LoginAPIClientImplementation()))
     var body: some View {
         NavigationStack(path: $coordinator.path) {
 
             LoginView(
                 viewModel: LoginViewModel(
-                    coordinator: coordinator
+                    loginUseCase: loginUseCase, coordinator: coordinator
                 )
             )
 
@@ -26,7 +26,7 @@ struct AppView: View {
                 switch route {
                 case .login:
                     LoginView(
-                        viewModel: LoginViewModel(
+                        viewModel: LoginViewModel(loginUseCase: loginUseCase,
                             coordinator: coordinator
                         )
                     )
